@@ -414,8 +414,35 @@ const obj = {};
 console.log(obj?.x?.y);
 ```
 This way if either "obj" or "obj.x" is undefined or null then you will receive undefined otherwise the value of "obj.x.y".
+### BMI
+Please write a function that takes an object with mass and height fields. Return a new object with the original fields and a new bmi field with the calculated bmi value.
+### Vector initializer
+Please write a function that has 3 parameters: x, y, z. Their default values should be 0. The function should return an array that contains x,y,z in this order.<br>
+Use this function to update the following array's arrays to three dimensional vectors:
+```javascript
+const vectors = [
+    [1,2,3],
+    [],
+    [2,3],
+    [-1],
+    [6,7,8,9]
+];
+// expected result:
+// [1,2,3]
+// [0,0,0]
+// [2,3,0]
+// [-1,0,0]
+// [6,7,8]
+```
+### Primitive fields
+Please write a function that takes an object and returns the names of it's fields if they have primitive types as values.
+```javascript
+// example
+primitiveFields({x:1,y:true, z:[]});
+// should return
+['x','y']
+```
 ### Warehouse💪
-Solve this exercise without ES6 or newer features and after that solve it with ES6 features.<br>
 Create four classes: Warehouse, Item, Toy, Tool.<br>
  The Item has two fields, name and price. The constructor of the item should take both values as parameters but the price should have a default value of 1.<br>
  The Toy and Tool classes are inherited from the Item class.<br>
