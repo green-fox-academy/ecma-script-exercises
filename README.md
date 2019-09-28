@@ -70,7 +70,40 @@ class Apple{
 ```
 
 Please write with both technologies a class that's named Garden, has width and length as variables and the following functions: area(), circumference() and efficiency(). The function called efficiency should return the result of area()/circumference().
-
+<br>
+### Class inheritance
+Using classes calls for class inheritance. Here is a quick example in ES5 for inheritance implementation:
+```javascript
+// this is the base class
+function Person(fName, lName) {
+  this.firstName = fName;
+  this.lastName = lName;
+}
+Person.prototype.getFullName = function () {
+  return this.firstName + ' ' + this.lastName;
+};
+// this is the child class
+function Employee(fName, lName, eId) {
+  Person.call(this, fName, lName);
+  this.empId = eId;
+}
+// we need to set the class prototype for inheritance
+Employee.prototype = Object.create(Person.prototype);
+// we have reassigned the constructor so we need to set it back
+Employee.prototype.constructor = Employee;
+// this is a new function for the inherited class
+Employee.prototype.getEmpInfo = function () {
+  return [this.empId, this.firstName, this.lastName];
+};
+var e1 = new Employee('Jhon', 'Doe', 10);
+e1.getFullName();
+e1.getEmpInfo();
+console.log(e1 instanceof Person);
+console.log(e1 instanceof Employee);
+```
+Please create a Playground class that is extended from the Garden class. Give it an extra toys field which should be a string array. Give it an add(toy) function that stores the new toy in the toys array.
+<br>
+  
 ### Literals
 ES6 made creating objects also easier. If you look at the code below you can see how attributes were assigned in newly created objects. With ES6 you can use dynamic properties in creation, not just after it, and if the property name is the same as the variable name, then you can shorthand those variables. 
 ```javascript
@@ -381,3 +414,23 @@ const obj = {};
 console.log(obj?.x?.y);
 ```
 This way if either "obj" or "obj.x" is undefined or null then you will receive undefined otherwise the value of "obj.x.y".
+### Warehouse💪
+Solve this exercise without ES6 or newer features and after that solve it with ES6 features.<br>
+Create four classes: Warehouse, Item, Toy, Tool.<br>
+ The Item has two fields, name and price. The constructor of the item should take both values as parameters but the price should have a default value of 1.<br>
+ The Toy and Tool classes are inherited from the Item class.<br>
+ The Toy has an extra color field which can be set through the constructor parameter.<br>
+ The Tool has an extra condition field which cannot be set through the constructor and has a default value of "good". <br>
+ All three classes have a print() function that writes the field values to the console ("vase - 30", "blue car - 10", "poor hammer - 5").<br>
+ The Warehouse has an itemList field, an addItem(item) function which stores the new item in the list and a printItemsOfType(type) function which expects a type (Item, Toy, Tool) parameter and prints those items that fit the criteria (hint: use instanceof).
+ ```javascript
+ // this snippet is for testing your code
+const wh = new Warehouse();
+wh.addItem(new Item("vase", 30));
+wh.addItem(new Toy("pebble", undefined, "grey"));
+wh.addItem(new Toy("car", 10, "blue"));
+wh.addItem(new Tool("hammer", 25));
+wh.printItemsOfType(Item);
+wh.printItemsOfType(Toy);
+wh.printItemsOfType(Tool);
+```
