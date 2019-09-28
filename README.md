@@ -290,3 +290,94 @@ for (let item of setEntity){
 ```
 Please write a solution that uses no ES6 functionality but provides set-like behaviour. It's enough to store and read data, you don't have to implement every feature of the ES6 Set class.<br>
 Please write a short code that presents your code's features.
+### Array.prototype.includes()
+This is a minor improvement is ES7. The Array class got a function named "includes". It returns a boolean value which is true if the parameter given to the function is present in the array. Earlier you could use the indexOf function but it wouldn't return a boolean right away.
+```javascript
+const arr = [1,2,3];
+if (arr.indexOf(2) !== -1){
+    console.log("We found 2 in the array without ES7 tools.");
+}
+if (arr.includes(2)){
+    console.log("We found 2 in the array with ES7 tools.");
+}
+```
+
+Update your ES6 Set class exchanging the array function you used to the other one.
+<br>
+After that create a function that takes two arrays and returns those numbers which are not present in both arrays.
+###Object.values/Object.entries
+ES8 introduced access to object values and entries as arrays. Before that you had to use Object.keys to get the object's keys first and then iterate through those.
+```javascript
+const obj = {x:1,y:2,z:3};
+
+// before ES8
+for (let key of Object.keys(obj)){
+    console.log(obj[key]);
+}
+for (let key of Object.keys(obj)){
+    console.log([key, obj[key]]);
+}
+
+// with ES8
+for (let val of Object.values(obj)){
+    console.log(val);
+}
+for (let entry of Object.entries(obj)){
+    console.log(entry);
+}
+```
+Write a function that takes an object which has numbers on it's keys. It represents the result of a word count on a text. The function should return the word with the highest count.
+### Proxy
+This ES6 feature takes a heavy load off the developers' shoulders. It can be used for many purposes, we will show one of them. The main idea is to have a target object representing a triangle with it's sides. We will create a Proxy to limit the fields you can set and we will create a field that can only be read.
+```javascript
+const target = {a:1,b:1,c:1};
+const handler = {
+    get: function(targetObject, field){
+        if (field === 'a' || field === 'b' || field === 'c'){
+            return targetObject[field];
+        }
+        if (field === 'circ'){
+            return targetObject.a + targetObject.b + targetObject.c;
+        }
+        return undefined;
+    },
+    set: function(targetObject, field, value){
+        if (field === 'a' || field === 'b' || field === 'c'){
+            return targetObject[field] = value;
+        }
+    }
+};
+const proxyObject = new Proxy(target, handler);
+proxyObject.a = 3;
+proxyObject.b = 4;
+proxyObject.c = 5;
+console.log(proxyObject.circ);
+proxyObject.x = 8;
+console.log(proxyObject.x);
+console.log(target.x);
+```
+This is only one usage of Proxy but it shows how convenient it can be once the proxy object is created.
+<br>
+<br>
+Please create a Proxy based object that disables the setting of anz field and only provides access to the "nextId" field. If that field is read, either initialize it to 1 if the target has no such field or increment it with 1 and then return the new value.
+### Optional chaining
+For now this feature is not implemented yet in ES but it's worth mentioning that it's a planned feature. In javascript if you refer a nested element you might get an error because the element containing the nested element is undefined.
+```javascript
+const obj = {};
+console.log(obj.x.y); // this will throw an error
+```
+You can create conditional statements that will protect against these errors.
+```javascript
+const obj = {};
+if (obj && obj.x){
+    console.log(obj.x.y);
+} else {
+    console.log(undefined);
+}
+```
+With the planned optional chaining feature you could shorthand this code like this:
+```javascript
+const obj = {};
+console.log(obj?.x?.y);
+```
+This way if either "obj" or "obj.x" is undefined or null then you will receive undefined otherwise the value of "obj.x.y".
